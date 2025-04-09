@@ -53,6 +53,7 @@ static const Layout layouts[] = {
     {"[M]", monocle},
     {"[@]", spiral},
     {"[\\]", dwindle},
+    {NULL, NULL},
 };
 
 /* key definitions */
@@ -105,6 +106,8 @@ static const Key keys[] = {
     {MODKEY, XK_h, setmfact, {.f = -0.05}},
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
     {MODKEY, XK_Return, zoom, {0}},
+    {MODKEY | ControlMask, XK_comma, cyclelayout, {.i = -1}},
+    {MODKEY | ControlMask, XK_period, cyclelayout, {.i = +1}},
     // View related hotkeys
     {MODKEY | ShiftMask, XK_Tab, cycleview, {0}},
     {MODKEY | ShiftMask, XK_f, togglefullscr, {0}},
