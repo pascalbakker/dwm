@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 #include "fibonacci.c"
+#include "movestack.c"
 
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY, TAG)                                                      \
@@ -29,10 +30,11 @@ static const char col_gray2[] = "#444444";
 static const char col_gray3[] = "#bbbbbb";
 static const char col_gray4[] = "#eeeeee";
 static const char col_cyan[] = "#005577";
+static const char col_ivyred[] = "#770000";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
-    [SchemeSel] = {col_gray4, col_cyan, col_cyan},
+    [SchemeSel] = {col_gray4, col_cyan, col_ivyred},
 };
 
 /* tagging */
@@ -58,10 +60,10 @@ static const int lockfullscreen =
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    {"[]=", tile}, /* first entry is default */
-    {"><>", NULL}, /* no layout function means floating behavior */
-    {"[M]", monocle},
     {"[@]", spiral},
+    {"[]=", tile},   /* first entry is default */
+    {"[Flt]", NULL}, /* no layout function means floating behavior */
+    {"[Full]", monocle},
     {"[\\]", dwindle},
 };
 
@@ -94,9 +96,11 @@ static const Key keys[] = {
     {MODKEY, XK_Return, spawn, {.v = termcmd}},
     // Toggle commands
     {MODKEY, XK_b, togglebar, {0}},
-    // Stack control commands
-    {MODKEY, XK_j, focusstack, {.i = +1}},
-    {MODKEY, XK_k, focusstack, {.i = -1}},
+    // Stack layout control commands
+    {MODKEY, XK_h, focusstack, {.i = +1}},
+    {MODKEY, XK_l, focusstack, {.i = -1}},
+    {MODKEY, XK_j, movestack, {.i = +1}},
+    {MODKEY, XK_k, movestack, {.i = -1}},
     // Change window size hotkeys
     {MODKEY, XK_minus, setmfact, {.f = -0.05}},
     {MODKEY, XK_plus, setmfact, {.f = +0.05}},
