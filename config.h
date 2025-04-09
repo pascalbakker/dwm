@@ -1,5 +1,22 @@
 /* See LICENSE file for copyright and license details. */
 
+#include "fibonacci.c"
+
+#define MODKEY Mod1Mask
+#define TAGKEYS(KEY, TAG)                                                      \
+  {MODKEY, KEY, view, {.ui = 1 << TAG}},                                       \
+      {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},               \
+      {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                        \
+      {MODKEY | ControlMask | ShiftMask, KEY, toggletag, {.ui = 1 << TAG}},
+
+/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+#define SHCMD(cmd)                                                             \
+  {                                                                            \
+    .v = (const char *[]) {                                                    \
+      "/bin/sh", "-c", cmd, NULL                                               \
+    }                                                                          \
+  }
+
 /* appearance */
 static const unsigned int borderpx = 1; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
@@ -39,7 +56,6 @@ static const int resizehints =
 static const int lockfullscreen =
     1; /* 1 will force focus on the fullscreen window */
 
-#include "fibonacci.c"
 static const Layout layouts[] = {
     /* symbol     arrange function */
     {"[]=", tile}, /* first entry is default */
@@ -50,21 +66,6 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
-#define TAGKEYS(KEY, TAG)                                                      \
-  {MODKEY, KEY, view, {.ui = 1 << TAG}},                                       \
-      {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},               \
-      {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                        \
-      {MODKEY | ControlMask | ShiftMask, KEY, toggletag, {.ui = 1 << TAG}},
-
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd)                                                             \
-  {                                                                            \
-    .v = (const char *[]) {                                                    \
-      "/bin/sh", "-c", cmd, NULL                                               \
-    }                                                                          \
-  }
-
 /* commands */
 static char dmenumon[2] =
     "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -82,31 +83,30 @@ static const char *dmenucmd[] = {"dmenu_run",
                                  "-sf",
                                  col_gray4,
                                  NULL};
+
+/* PROGRAMS */
 static const char *termcmd[] = {"st", NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
+    // Spawn commands
     {MODKEY, XK_d, spawn, {.v = dmenucmd}},
     {MODKEY, XK_Return, spawn, {.v = termcmd}},
+    // Toggle commands
     {MODKEY, XK_b, togglebar, {0}},
+    // Stack control commands
     {MODKEY, XK_j, focusstack, {.i = +1}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
-    {MODKEY, XK_i, incnmaster, {.i = +1}},
-    {MODKEY, XK_r, setlayout, {.v = &layouts[3]}},
-    {MODKEY | ShiftMask, XK_r, setlayout, {.v = &layouts[4]}},
-    // { MODKEY, XK_d, incnmaster, { .i = -1 } },
-    {MODKEY, XK_h, setmfact, {.f = -0.05}},
-    {MODKEY, XK_l, setmfact, {.f = +0.05}},
-    {MODKEY, XK_Return, zoom, {0}},
-    {MODKEY, XK_Tab, view, {0}},
-    // View related hotkeys
-    {MODKEY, XK_f, togglefullscr, {0}},
+    // Change window size hotkeys
+    {MODKEY, XK_minus, setmfact, {.f = -0.05}},
+    {MODKEY, XK_plus, setmfact, {.f = +0.05}},
+    // Layout hotkeys
+    {MODKEY, XK_f, togglefullscr, {0}},                  // fullscreen
+    {MODKEY | ShiftMask, XK_space, togglefloating, {0}}, // floating
+    {MODKEY | ShiftMask, XK_Tab, cycleview, {0}},        // cycle
+    // Kill commands
     {MODKEY, XK_q, killclient, {0}},
-    //{ MODKEY, XK_t, setlayout, { .v = &layouts[0] } },
-    {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
-    //{ MODKEY, XK_m, setlayout, { .v = &layouts[2] } },
     {MODKEY, XK_space, setlayout, {0}},
-    {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
     {MODKEY, XK_0, view, {.ui = ~0}},
     {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
     {MODKEY, XK_comma, focusmon, {.i = -1}},
