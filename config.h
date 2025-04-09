@@ -36,7 +36,8 @@ static const char* colors[][3] = {
 };
 
 static const char* const autostart[] = {
-    "st", NULL, NULL /* terminate */
+    "st", NULL, "sh", "-c", "~/scripts/dwm-status-script.sh",
+    NULL, NULL /* terminate */
 };
 
 /* tagging */
@@ -91,8 +92,8 @@ static const Key keys[] = {
     {MODKEY, XK_j, movestack, {.i = +1}},
     {MODKEY, XK_k, movestack, {.i = -1}},
     // Change window size hotkeys
-    {MODKEY, XK_minus, setmfact, {.f = -0.05}},
-    {MODKEY, XK_plus, setmfact, {.f = +0.05}},
+    {MODKEY | ControlMask, XK_minus, setmfact, {.f = -0.05}},
+    {MODKEY | ControlMask, XK_equal, setmfact, {.f = +0.05}},
     // Layout hotkeys
     {MODKEY | ControlMask, XK_comma, cyclelayout, {.i = -1}},
     {MODKEY | ControlMask, XK_period, cyclelayout, {.i = +1}},
