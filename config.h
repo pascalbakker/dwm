@@ -87,10 +87,10 @@ static const Key keys[] = {
     // Toggle commands
     {MODKEY, XK_b, togglebar, {0}},
     // Stack layout control commands
-    {MODKEY, XK_h, focusstack, {.i = +1}},
-    {MODKEY, XK_l, focusstack, {.i = -1}},
-    {MODKEY, XK_j, movestack, {.i = +1}},
-    {MODKEY, XK_k, movestack, {.i = -1}},
+    {MODKEY, XK_l, focusstack, {.i = +1}},
+    {MODKEY, XK_h, focusstack, {.i = -1}},
+    {MODKEY, XK_k, movestack, {.i = +1}},
+    {MODKEY, XK_j, movestack, {.i = -1}},
     // Change window size hotkeys
     {MODKEY | ControlMask, XK_minus, setmfact, {.f = -0.05}},
     {MODKEY | ControlMask, XK_equal, setmfact, {.f = +0.05}},
