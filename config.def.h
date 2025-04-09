@@ -103,6 +103,7 @@ static const Key keys[] = {
     // cycleview, { 1 } }, { MODKEY |
     // ShiftMask, XK_k, cycleview, { 0 }
     // },
+    {MODKEY | ShiftMask, XK_f, togglefullscr, {0}},
     {MODKEY, XK_k, focusstack, {.i = -1}},
     {MODKEY, XK_i, incnmaster, {.i = +1}},
     {MODKEY, XK_d, incnmaster, {.i = -1}},
