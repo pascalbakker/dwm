@@ -2,8 +2,10 @@
 
 #include "fibonacci.c"
 #include "movestack.c"
+#include <X11/XF86keysym.h>
 
 #define TERMCLASS "St"
+#define TERMCLASS_COLOR "st-256color"
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY, TAG)                                                                          \
     {MODKEY, KEY, view, {.ui = 1 << TAG}},                                                         \
@@ -50,13 +52,13 @@ static const Rule rules[] = {
      *class WM_NAME(STRING) = title
      */
     // clang-format off
-  	/* class    instance      title       	 tags_mask    isfloating   isterminal  noswallow  monitor */
-    { "Gimp",     NULL,       NULL,          1 << 8,      0,           0,          0,         -1 },
-    { TERMCLASS,  NULL,       NULL,       	 0,           0,           1,          0,         -1 },
-    { "st-256color",  NULL,       NULL,       	 0,           0,           1,          0,         -1 },
-    { NULL,       NULL,       "Event Tester", 0,          0,           0,          1,         -1 },
-    { TERMCLASS,  "floatterm", NULL,       	 0,           1,           1,          0,         -1 },
-    { TERMCLASS,  "bg",        NULL,       	 1 << 7,      0,           1,          0,         -1 },
+      /* class            instance        title        tags_mask    isfloating    isterminal    noswallow    monitor */
+    { "Gimp",           NULL,           NULL,         1 << 8,      0,            0,            0,           -1 },
+    { TERMCLASS,        NULL,           NULL,         0,            0,            1,            0,           -1 },
+    { TERMCLASS_COLOR,    NULL,           NULL,         0,            0,            1,            0,           -1 },
+    { NULL,             NULL,           "Event Tester", 0,         0,            0,            1,           -1 },
+    { TERMCLASS,        "floatterm",    NULL,         0,            1,            1,            0,           -1 },
+    { TERMCLASS,        "bg",           NULL,         1 << 7,      0,            1,            0,           -1 },
     // clang-format on
 };
 
@@ -99,6 +101,10 @@ static const char* termcmd[] = {"st", NULL};
 static const Key keys[] = {
     // clang-format off
     /* modifier                     key        function        argument */
+    // Volume commands 
+    { 0, XF86XK_AudioLowerVolume, spawn, SHCMD("amixer set Master 5%-") },
+    { 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer set Master 5%+") },
+    { 0, XF86XK_AudioMute, spawn, SHCMD("amixer set Master toggle") },
     // Spawn commands
     { MODKEY,                     XK_d,       spawn,          {.v = dmenucmd} },
     { MODKEY,                     XK_Return,  spawn,          {.v = termcmd} },
@@ -120,7 +126,9 @@ static const Key keys[] = {
     { MODKEY,                     XK_Tab,     cycleview,      {0} },                   // cycle
     // Kill commands
     { MODKEY,                     XK_q,       killclient,     {0} },
+    { MODKEY | ShiftMask,         XK_q,       quit,           {0} },
     { MODKEY,                     XK_space,   setlayout,      {0} },
+    // Tag commands
     { MODKEY,                     XK_0,       view,           {.ui = ~0} },
     { MODKEY | ShiftMask,         XK_0,       tag,            {.ui = ~0} },
     // Tag keys
@@ -133,7 +141,6 @@ static const Key keys[] = {
     TAGKEYS(XK_7, 6)
     TAGKEYS(XK_8, 7)
     TAGKEYS(XK_9, 8)
-    { MODKEY | ShiftMask,         XK_q,       quit,           {0} },
     // clang-format on
 };
 
