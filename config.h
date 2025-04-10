@@ -99,50 +99,40 @@ static const char *dmenucmd[] = {
 static const char* termcmd[] = {"st", NULL};
 
 static const Key keys[] = {
-    // clang-format off
     /* modifier                     key        function        argument */
-    // Volume commands 
-    { 0, XF86XK_AudioLowerVolume, spawn, SHCMD("amixer set Master 5%-") },
-    { 0, XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer set Master 5%+") },
-    { 0, XF86XK_AudioMute, spawn, SHCMD("amixer set Master toggle") },
+    // Volume commands
+    {0, XF86XK_AudioLowerVolume, spawn, SHCMD("amixer set Master 5%-")},
+    {0, XF86XK_AudioRaiseVolume, spawn, SHCMD("amixer set Master 5%+")},
+    {0, XF86XK_AudioMute, spawn, SHCMD("amixer set Master toggle")},
     // Spawn commands
-    { MODKEY,                     XK_d,       spawn,          {.v = dmenucmd} },
-    { MODKEY,                     XK_Return,  spawn,          {.v = termcmd} },
+    {MODKEY, XK_d, spawn, {.v = dmenucmd}},
+    {MODKEY, XK_Return, spawn, {.v = termcmd}},
     // Toggle commands
-    { MODKEY,                     XK_b,       togglebar,      {0} },
+    {MODKEY, XK_b, togglebar, {0}},
     // Stack layout control commands
-    { MODKEY,                     XK_l,       focusstack,     {.i = +1} },
-    { MODKEY,                     XK_h,       focusstack,     {.i = -1} },
-    { MODKEY,                     XK_k,       movestack,      {.i = +1} },
-    { MODKEY,                     XK_j,       movestack,      {.i = -1} },
+    {MODKEY, XK_l, focusstack, {.i = +1}},
+    {MODKEY, XK_h, focusstack, {.i = -1}},
+    {MODKEY, XK_k, movestack, {.i = +1}},
+    {MODKEY, XK_j, movestack, {.i = -1}},
     // Change window size hotkeys
-    { MODKEY | ControlMask,       XK_minus,   setmfact,       {.f = -0.05} },
-    { MODKEY | ControlMask,       XK_equal,   setmfact,       {.f = +0.05} },
+    {MODKEY | ControlMask, XK_minus, setmfact, {.f = -0.05}},
+    {MODKEY | ControlMask, XK_equal, setmfact, {.f = +0.05}},
     // Layout hotkeys
-    { MODKEY | ControlMask,       XK_comma,   cyclelayout,    {.i = -1} },
-    { MODKEY | ControlMask,       XK_period,  cyclelayout,    {.i = +1} },
-    { MODKEY,                     XK_f,       togglefullscr,  {0} },                   // fullscreen
-    { MODKEY | ShiftMask,         XK_space,   togglefloating, {0} },                   // floating
-    { MODKEY,                     XK_Tab,     cycleview,      {0} },                   // cycle
+    {MODKEY | ControlMask, XK_comma, cyclelayout, {.i = -1}},
+    {MODKEY | ControlMask, XK_period, cyclelayout, {.i = +1}},
+    {MODKEY, XK_f, togglefullscr, {0}},                  // fullscreen
+    {MODKEY | ShiftMask, XK_space, togglefloating, {0}}, // floating
+    {MODKEY, XK_Tab, cycleview, {0}},                    // cycle
     // Kill commands
-    { MODKEY,                     XK_q,       killclient,     {0} },
-    { MODKEY | ShiftMask,         XK_q,       quit,           {0} },
-    { MODKEY,                     XK_space,   setlayout,      {0} },
+    {MODKEY, XK_q, killclient, {0}},
+    {MODKEY | ShiftMask, XK_q, quit, {0}},
+    {MODKEY, XK_space, setlayout, {0}},
     // Tag commands
-    { MODKEY,                     XK_0,       view,           {.ui = ~0} },
-    { MODKEY | ShiftMask,         XK_0,       tag,            {.ui = ~0} },
+    {MODKEY, XK_0, view, {.ui = ~0}},
+    {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
     // Tag keys
-    TAGKEYS(XK_1, 0)
-    TAGKEYS(XK_2, 1)
-    TAGKEYS(XK_3, 2)
-    TAGKEYS(XK_4, 3)
-    TAGKEYS(XK_5, 4)
-    TAGKEYS(XK_6, 5)
-    TAGKEYS(XK_7, 6)
-    TAGKEYS(XK_8, 7)
-    TAGKEYS(XK_9, 8)
-    // clang-format on
-};
+    TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3) TAGKEYS(XK_5, 4)
+        TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7) TAGKEYS(XK_9, 8)};
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
