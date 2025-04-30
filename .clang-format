@@ -1,5 +1,33 @@
 BasedOnStyle: LLVM
-IndentWidth: 4
-DerivePointerAlignment: false
-PointerAlignment: Left
 ColumnLimit: 100
+IndentWidth: 4
+UseTab: Never
+
+# Put braces on a new line
+BreakBeforeBraces: Allman
+
+# Align function parameters nicely
+AlignAfterOpenBracket: Align
+AlignOperands: true
+AlignTrailingComments: true
+
+# Reflow long argument lists
+BinPackParameters: false
+BinPackArguments: false
+
+# Keep one parameter per line if it started multiline
+AllowAllParametersOfDeclarationOnNextLine: false
+
+# Control how closely things like `*` and `&` bind to the variable name
+PointerAlignment: Left
+
+# Optional: Makes template param lists cleaner
+AlwaysBreakTemplateDeclarations: Yes
+
+# Optional: Forces return type to be on its own line in function defs
+AlwaysBreakAfterReturnType: TopLevel
+
+# Optional: Better for multi-line conditions
+BreakBeforeBinaryOperators: NonAssignment
+
+

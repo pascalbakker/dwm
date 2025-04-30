@@ -6,7 +6,7 @@
 
 #define TERMCLASS "St"
 #define TERMCLASS_COLOR "st-256color"
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY, TAG)                                                                          \
     {MODKEY, KEY, view, {.ui = 1 << TAG}},                                                         \
         {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},                                 \
@@ -40,7 +40,16 @@ static const char* colors[][3] = {
 };
 
 static const char* const autostart[] = {
-    "st", NULL, "sh", "-c", "~/scripts/dwm-status-script.sh", NULL, NULL /* terminate */
+    "st",
+    NULL,
+    "sh",
+    "-c",
+    "~/scripts/dwm-status-script.sh",
+    NULL,
+    "setxkbmap",
+    "-option",
+    "caps:super",
+    NULL /* terminate */
 };
 
 /* tagging */
@@ -51,15 +60,14 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance,
      *class WM_NAME(STRING) = title
      */
-    // clang-format off
-      /* class            instance        title        tags_mask    isfloating    isterminal    noswallow    monitor */
-    { "Gimp",           NULL,           NULL,         1 << 8,      0,            0,            0,           -1 },
-    { TERMCLASS,        NULL,           NULL,         0,            0,            1,            0,           -1 },
-    { TERMCLASS_COLOR,    NULL,           NULL,         0,            0,            1,            0,           -1 },
-    { NULL,             NULL,           "Event Tester", 0,         0,            0,            1,           -1 },
-    { TERMCLASS,        "floatterm",    NULL,         0,            1,            1,            0,           -1 },
-    { TERMCLASS,        "bg",           NULL,         1 << 7,      0,            1,            0,           -1 },
-    // clang-format on
+    /* class            instance        title        tags_mask    isfloating
+       isterminal    noswallow    monitor */
+    {"Gimp", NULL, NULL, 1 << 8, 0, 0, 0, -1},
+    {TERMCLASS, NULL, NULL, 0, 0, 1, 0, -1},
+    {TERMCLASS_COLOR, NULL, NULL, 0, 0, 1, 0, -1},
+    {NULL, NULL, "Event Tester", 0, 0, 0, 1, -1},
+    {TERMCLASS, "floatterm", NULL, 0, 1, 1, 0, -1},
+    {TERMCLASS, "bg", NULL, 1 << 7, 0, 1, 0, -1},
 };
 
 /* layout(s) */
@@ -69,31 +77,32 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
-    // clang-format off
     /* symbol     arrange function */
-    { "[T]",      tile },       // Default master-stack layout
-    { "[F]",      NULL },       // Floating windows
-    { "[M]",      monocle },    // Fullscreen monocle
-    { "[S]",      spiral },     // Fibonacci spiral
-    { "[D]",      dwindle },    // Shrinking Fibonacci
-    // clang-format on  
+    {"[T]", tile},    // Default master-stack layout
+    {"[F]", NULL},    // Floating windows
+    {"[M]", monocle}, // Fullscreen monocle
+    {"[S]", spiral},  // Fibonacci spiral
+    {"[D]", dwindle}, // Shrinking Fibonacci
 };
 
 /* key definitions */
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
-// clang-format off
-static const char *dmenucmd[] = {
-    "dmenu_run", "-m",  dmenumon,
-                 "-fn", dmenufont,
-                 "-nb", col_gray1,
-                 "-nf", col_gray3,
-                 "-sb", col_cyan,
-                 "-sf", col_gray4,
-    NULL
-};
-// clang-format on
+static const char* dmenucmd[] = {"dmenu_run",
+                                 "-m",
+                                 dmenumon,
+                                 "-fn",
+                                 dmenufont,
+                                 "-nb",
+                                 col_gray1,
+                                 "-nf",
+                                 col_gray3,
+                                 "-sb",
+                                 col_cyan,
+                                 "-sf",
+                                 col_gray4,
+                                 NULL};
 
 /* PROGRAMS */
 static const char* termcmd[] = {"st", NULL};
